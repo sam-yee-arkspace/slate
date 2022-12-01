@@ -5,6 +5,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - shell
   - python
   - javascript
+  - ruby
 
 toc_footers:
   - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
@@ -32,6 +33,26 @@ If anything is missing or seems incorrect, please contact your account manager.
 # Authentication
 
 > To authorize, use this code:
+
+```ruby
+require "uri"
+require "json"
+require "net/http"
+
+url = URI("http://{{ domain }}/api/auth")
+
+http = Net::HTTP.new(url.host, url.port);
+request = Net::HTTP::Post.new(url)
+request["Content-Type"] = "application/json"
+request.body = JSON.dump({
+  "username": "api_user",
+  "password": "password"
+})
+
+response = http.request(request)
+puts response.read_body
+
+```
 
 ```python
 import requests
@@ -93,9 +114,9 @@ Api endpoints expects for the API token to be included in all API requests to th
 You must replace <code>api_token</code> with your personal API Token.
 </aside>
 
-# Kittens
+# Inventory
 
-## Get All Kittens
+## Get All Inventory
 
 ```ruby
 require 'kittn'
