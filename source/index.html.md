@@ -3,12 +3,10 @@ title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - ruby
   - python
   - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -25,50 +23,74 @@ meta:
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the WMS API! You can use our API to access WMS API endpoints, which can get information on various orders, inventory, and fulfill orders.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We have language bindings in Shell, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+If anything is missing or seems incorrect, please contact your account manager.
 
 # Authentication
 
 > To authorize, use this code:
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
 ```python
-import kittn
+import requests
+import json
 
-api = kittn.authorize('meowmeowmeow')
+url = "http://47.242.157.92/api/auth"
+
+payload = json.dumps({
+  "username": "api_user",
+  "password": "password"
+})
+headers = {
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
 ```
 
 ```shell
 # With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
+curl --location --request POST 'http://{{ domain }}/api/auth' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username": "api_user",
+    "password": "password"
+}'
 ```
 
 ```javascript
-const kittn = require('kittn');
+var settings = {
+  "url": "http://47.242.157.92/api/auth",
+  "method": "POST",
+  "timeout": 0,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "data": JSON.stringify({
+    "username": "api_user",
+    "password": "password"
+  }),
+};
 
-let api = kittn.authorize('meowmeowmeow');
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+> Make sure to replace `api_user` and `password` with your API Credential.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+The API uses Token to allow access to the API. You can register a new API User 
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+Api endpoints expects for the API token to be included in all API requests to the server in a parameter that looks like the following:
 
-`Authorization: meowmeowmeow`
+`?Authorization=Token api_token`
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>api_token</code> with your personal API Token.
 </aside>
 
 # Kittens
